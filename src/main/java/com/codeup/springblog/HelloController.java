@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
             return "Goodbye from Spring!";
         }
 
-        @GetMapping("")
-
-        @GetMapping("/books/{id}")
-        @ResponseBody
-        public String getBook(@PathVariable  long id){
-            return "Viewing book " + if
-        }
+//        @GetMapping("")
+//
+//        @GetMapping("/books/{id}")
+//        @ResponseBody
+//        public String getBook(@PathVariable  long id){
+//            return "Viewing book " + if
+//        }
 
 
     }
