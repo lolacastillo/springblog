@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="header :: head">
+<head th:replace="/partials/header :: head">
     <meta charset="UTF-8">
     <title>Dice</title>
 </head>
 <body>
-<nav th:replace="navbar::navbar"/>
+<nav th:replace="/partials/navbar::navbar"/>
 <h1>Welcome to the dice rolling game!</h1>
 <p>Select a link as your guess:</p>
 <a href="/roll-dice/1">One</a>
@@ -19,7 +19,7 @@
 <h1>The dice landed on: <span th:text="${result}">number</span></h1>
 <h1><span th:text="${match}"></span></h1>
 
-<footer th:replace="footer :: foot"/>
+<footer th:replace="/partials/footer :: foot"/>
 
 </body>
 </html>

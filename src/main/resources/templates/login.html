@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="header :: head"/>
+<head th:replace="/partials/header :: head"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="navbar :: navbar"/>
+<nav th:replace="/partials/navbar :: navbar"/>
 <form action="/profile" method="post">
     <label for="username">Username:</label>
     <input type="text" name="username" id="username">
@@ -16,6 +16,6 @@
     <p>Your username is: <span th:text="${username}"></span></p>
     <p>Your password is: <span th:text="${password}"></span></p>
 </form>
-<footer th:replace="footer ::foot"/>
+<footer th:replace="/partials/footer ::foot"/>
 </body>
 </html>
