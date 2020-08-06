@@ -38,9 +38,10 @@ public class PostController {
 //    }
 
     @GetMapping("/posts/{id}")
-    public String postsId(@PathVariable int id, Model model) {
-        Post post = new Post("hello", "hello world");
-        model.addAttribute("post",post);
+    public String postsId(@PathVariable long id, Model model) {
+        Post pulledPost = postDao.getOne(id);
+//        Post post = new Post("hello", "hello world");
+        model.addAttribute("post",pulledPost);
         return "/posts/show";
     }
 
@@ -56,28 +57,27 @@ public class PostController {
         return "This is the page for creating a post";
     }
 
-    @GetMapping("/posts/edit")
-    public String getEditPost(Model model){
-        System.out.println("getting");
-        model.addAttribute("posts",postDao.findAll());
+    @GetMapping("/posts/{id}/edit")
+    public String editForm(@PathVariable long id, Model model){
+        model.addAttribute("post",postDao.getOne(id));
         return "/posts/edit";
     }
 
-    @PostMapping(value = "/posts/edit/{id}")
-    public String editPost(@PathVariable Long id, @RequestParam(name="title") String title, @RequestParam("body") String body, Model model){
+    @PostMapping(value = "/posts/{id}/edit")
+    public String update(@PathVariable Long id,
+                         @RequestParam(name="title") String title,
+                         @RequestParam(name="body") String body){
         Post post = postDao.getOne(id);
-        System.out.println("editing post");
         post.setTitle(title);
         post.setBody(body);
-        System.out.println(id);
         postDao.save(post);
-        return "redirect:/posts/edit";
+        return "redirect:/posts/{id}";
     }
 
-    @PostMapping(value= "/post/delete/{id}")
-    public String deletePost(@PathVariable Long id, @RequestParam(name="title") String title, @RequestParam("body") String body){
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable long id){
         postDao.deleteById(id);
-        return "redirect:/post";
+        return "redirect:/posts";
     }
 
 

@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="/partials/header :: head(pageTitle ='Edit')">
     <meta charset="UTF-8">
     <title>Edit Posts</title>
 </head>
 <body>
-<div th:each="post : ${posts}">
-    <form method="post" th:action="@{'/posts/edit/' + ${post.id}}">
-    <tr>
-        <td th:text="${post.title}"/>
-        <input type="text" name="title" id="title">
-        <td th:text="${post.body}"/>
-        <input type="text" name="body" id="body">
-        <input type="hidden" name="id" th:value="${post.id}">
-
-
-        <br>
-    </tr>
-        <button>submit</button>
-        <form method="post" th:action="@{'/posts/delete' + ${post.id}}">
-        <button class="btn btn-danger btn-sm" type="submit" value="Delete"/>
-        </form>
+<h1>Edit Post</h1>
+    <form th:method="POST" th:action="@{'/posts/' + ${post.id} + '/edit'}">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" th:value="${post.title}">
+        </div>
+        <div>
+        <div>
+            <label for="title">Body</label>
+            <textarea name="body" id="body" th:value="${post.body}"></textarea>
+        </div>
+        <button>Submit</button>
     </form>
-</div>
+
+<footer th:replace="/partials/footer ::foot"/>
 </body>
 </html>

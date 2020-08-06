@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="header :: head(pageTitle='view all pos')">
+<head th:replace="/partials/header :: head(pageTitle='view all pos')">
     <meta charset="UTF-8">
     <title>Viewing Post</title>
 </head>
 <body>
 <div>
-    <p th:text="${post.title}"></p>
-    <p th:text="${post.body}"></p>
+
+    <h1 th:text="${post.title}"></h1>
+    <h3 th:text="${post.body}"></h3>
+
+    <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
+
+    <form method="post" th:action="@{/posts/{id}/delete(id=${post.id})}">
+        <input type="hidden" name="id" th:value="${post.id}">
+        <button type="submit">Delete</button>
+    </form>
+
 </div>
 </body>
 </html>
