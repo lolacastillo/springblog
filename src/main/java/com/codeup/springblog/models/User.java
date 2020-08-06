@@ -11,14 +11,14 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
     @Column(nullable = false, length = 50)
     private String password;
 
-    @OneToMany(mappedBy = "parentUser")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentUser")
     @JsonManagedReference
     private List<Post> posts;
 

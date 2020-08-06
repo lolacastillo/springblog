@@ -17,13 +17,6 @@ public class PostController {
         this.userDao = userDao;
     }
 
-//    public PostController(PostRepository postDao){
-//        this.postDao = postDao;
-//    }
-//    public PostController(UserRepository userDao){
-//        this.userDao = userDao;
-//    }
-
     @GetMapping("/posts")
         public String index(Model model){
         model.addAttribute("users",userDao.findAll());
@@ -54,21 +47,20 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String postCreate() {
-        return "This is the page for creating a post";
+    public String create() {
+        return "/posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String postCreated() {
-        Post newPost = new Post();
-//        newPost.setParentUser(userDao.getOne(id));
-        return "This is the page for creating a post";
+    public String insert(@RequestParam String title, @RequestParam String body) {
+        User user = userDao.getOne(1L);
+        Post newPost = new Post(title,body,user);
+        postDao.save((newPost));
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/{id}/edit")
-    public String editForm(@PathVariable long id, Model model){
+    public String edit(@PathVariable long id, Model model){
         model.addAttribute("post",postDao.getOne(id));
         return "/posts/edit";
     }
@@ -85,7 +77,7 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/delete")
-    public String deletePost(@PathVariable long id){
+    public String delete(@PathVariable long id){
         postDao.deleteById(id);
         return "redirect:/posts";
     }
