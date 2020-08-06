@@ -10,6 +10,8 @@
 
     <h1 th:text="${post.title}"></h1>
     <h3 th:text="${post.body}"></h3>
+    <h4>Created by:</h4>
+    <h4 th:text="${user.email}"></h4>
 
     <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
 

@@ -20,6 +20,13 @@ public class Post {
     @JsonBackReference
     private User parentUser;
 
+    public User getParentUser() {
+        return parentUser;
+    }
+
+    public void setParentUser(User parentUser) {
+        this.parentUser = parentUser;
+    }
 
     public Post() {
     }

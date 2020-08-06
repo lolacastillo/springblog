@@ -2,24 +2,31 @@ package com.codeup.springblog;
 
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codeup.springblog.models.User;
+import com.codeup.springblog.models.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
 @Controller
 public class PostController {
-    @Autowired
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao){
-        this.postDao = postDao;
+    public PostController(PostRepository postDao, UserRepository userDao){this.postDao = postDao;
+        this.userDao = userDao;
     }
+
+//    public PostController(PostRepository postDao){
+//        this.postDao = postDao;
+//    }
+//    public PostController(UserRepository userDao){
+//        this.userDao = userDao;
+//    }
 
     @GetMapping("/posts")
         public String index(Model model){
+        model.addAttribute("users",userDao.findAll());
         model.addAttribute("posts",postDao.findAll());
         return "posts/index";
     }
@@ -41,6 +48,7 @@ public class PostController {
     public String postsId(@PathVariable long id, Model model) {
         Post pulledPost = postDao.getOne(id);
 //        Post post = new Post("hello", "hello world");
+        model.addAttribute("user",pulledPost.getParentUser());
         model.addAttribute("post",pulledPost);
         return "/posts/show";
     }
@@ -54,6 +62,8 @@ public class PostController {
     @PostMapping("/posts/create")
     @ResponseBody
     public String postCreated() {
+        Post newPost = new Post();
+//        newPost.setParentUser(userDao.getOne(id));
         return "This is the page for creating a post";
     }
 
