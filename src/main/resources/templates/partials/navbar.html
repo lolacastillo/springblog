@@ -7,14 +7,14 @@
 </head>
 <body>
 <div th:fragment="navbar">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default bg-light mb-3 border">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/ads">Adlister</a>
+                <a class="navbar-brand" href="/posts">Spring Blog</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/logout">Logout</a></li>
+            <ul class="nav navbar-nav navbar-right navbar-expand">
+                <li class="mr-4"><a href="/posts/create">Create</a></li>
+                <li><a href="/posts">View All Posts</a></li>
             </ul>
         </div>
     </nav>

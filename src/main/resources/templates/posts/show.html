@@ -6,20 +6,28 @@
     <title>Viewing Post</title>
 </head>
 <body>
-<div>
+<nav th:replace="/partials/navbar :: navbar"/>
+<div class="card w-75 container-fluid">
+    <h1 class="card-title" th:text="${post.title}"></h1>
+    <div class="card-body">
+        <h3 class="card-text text-center mb-5" th:text="${post.body}"></h3>
 
-    <h1 th:text="${post.title}"></h1>
-    <h3 th:text="${post.body}"></h3>
-    <h4>Created by:</h4>
-    <h4 th:text="${user.email}"></h4>
-
-    <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
-
-    <form method="post" th:action="@{/posts/{id}/delete(id=${post.id})}">
-        <input type="hidden" name="id" th:value="${post.id}">
-        <button type="submit">Delete</button>
-    </form>
+        <div class="d-inline text-right">
+            <h4 class="card-subtitle">Created by:</h4>
+            <h4 th:text="${post.parentUser.username}"></h4>
+        </div>
+        <div class="text-center">
+        <a class="d-inline " th:href="@{/posts/{id}/edit(id=${post.id})}"><input type="button"
+                                                                                 class="button btn btn-primary w-25"
+                                                                                 value="Edit"></a>
+        <form class="d-inline" method="post" th:action="@{/posts/{id}/delete(id=${post.id})}">
+            <input type="hidden" name="id" th:value="${post.id}">
+            <button class="btn btn-primary w-25" type="submit">Delete</button>
+        </form>
+        </div>
+    </div>
 
 </div>
+<footer th:replace="/partials/footer ::foot"/>
 </body>
 </html>

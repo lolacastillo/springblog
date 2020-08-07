@@ -5,19 +5,26 @@
     <title>Edit Posts</title>
 </head>
 <body>
-<h1>Edit Post</h1>
-    <form th:method="POST" th:action="@{'/posts/' + ${post.id} + '/edit'}">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" th:value="${post.title}">
+<nav th:replace="/partials/navbar :: navbar"/>
+<div class="container-fluid card w-75">
+    <h1 class="card-title mb-3">Edit Post</h1>
+    <form th:method="POST" th:action="@{'/posts/' + ${post.id} + '/edit'}" th:object="${post}">
+        <div class="mb-3">
+            <h3>Title</h3>
+            <input class="w-100" type="text" th:field="*{title}" id="title" th:value="${post.title}">
         </div>
-        <div>
-        <div>
-            <label for="title">Body</label>
-            <textarea name="body" id="body" th:value="${post.body}"></textarea>
+        <div class="mb-3">
+            <div>
+                <h3>Body</h3>
+                <textarea class="w-100" th:field="*{body}" id="body" th:value="${post.body}"></textarea>
+            </div>
+
+            <div class="text-right">
+                <button class="btn btn-primary w-25 m-4">Submit</button>
+            </div>
         </div>
-        <button>Submit</button>
     </form>
+</div>
 
 <footer th:replace="/partials/footer ::foot"/>
 </body>

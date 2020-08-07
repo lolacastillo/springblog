@@ -4,6 +4,7 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.PostRepository;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.models.UserRepository;
+import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,15 +48,17 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("post", new Post());
         return "/posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String insert(@RequestParam String title, @RequestParam String body) {
-        User user = userDao.getOne(1L);
-        Post newPost = new Post(title,body,user);
-        postDao.save((newPost));
+    public String insert(@ModelAttribute Post post) {
+//        User user = userDao.getOne(1L);
+//        Post newPost = new Post(title,body,user);
+        post.setParentUser(userDao.getOne(1L));
+        postDao.save((post));
         return "redirect:/posts";
     }
 
@@ -66,12 +69,11 @@ public class PostController {
     }
 
     @PostMapping(value = "/posts/{id}/edit")
-    public String update(@PathVariable Long id,
-                         @RequestParam(name="title") String title,
-                         @RequestParam(name="body") String body){
-        Post post = postDao.getOne(id);
-        post.setTitle(title);
-        post.setBody(body);
+    public String update(@ModelAttribute Post post){
+//        Post post = postDao.getOne(id);
+//        post.setTitle(title);
+//        post.setBody(body);
+        post.setParentUser(userDao.getOne(1L));
         postDao.save(post);
         return "redirect:/posts/{id}";
     }
@@ -81,6 +83,7 @@ public class PostController {
         postDao.deleteById(id);
         return "redirect:/posts";
     }
+
 
 
 }

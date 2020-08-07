@@ -5,21 +5,26 @@
     <title>Create Post</title>
 </head>
 <body>
-<h1>Create Post</h1>
+<nav th:replace="/partials/navbar :: navbar"/>
+<div class="container-fluid card w-75">
+    <h1 class="card-title">Create Post</h1>
 
-<form th:method="POST" th:action="@{'/posts/create'}">
-    <div>
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title">
-    </div>
-    <div>
-        <div>
-            <label for="title">Body</label>
-            <textarea name="body" id="body"></textarea>
+    <form th:method="POST" th:action="@{'/posts/create'}" th:object="${post}">
+        <div class="mb-2">
+            <h3>Title</h3>
+            <input class="w-100" type="text" th:field="*{title}" id="title">
         </div>
-        <button>Create Post</button>
-</form>
-
+        <div class="">
+            <div>
+                <h3>Body</h3>
+                <textarea class="w-100" th:field="*{body}" id="body"></textarea>
+            </div>
+        </div>
+        <div class="text-right m-4">
+        <button class="btn btn-primary">Create Post</button>
+        </div>
+    </form>
+</div>
 <footer th:replace="/partials/footer ::foot"/>
 </body>
 </html>
