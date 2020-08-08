@@ -1,9 +1,6 @@
 package com.codeup.springblog;
 
-import com.codeup.springblog.models.Post;
-import com.codeup.springblog.models.PostRepository;
-import com.codeup.springblog.models.User;
-import com.codeup.springblog.models.UserRepository;
+import com.codeup.springblog.models.*;
 import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +10,15 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao){this.postDao = postDao;
+
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService){this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
+
+
 
     @GetMapping("/posts")
         public String index(Model model){
@@ -59,6 +61,7 @@ public class PostController {
 //        Post newPost = new Post(title,body,user);
         post.setParentUser(userDao.getOne(1L));
         postDao.save((post));
+        emailService.prepareAndSend(post,post.getTitle(),post.getBody());
         return "redirect:/posts";
     }
 
@@ -69,7 +72,7 @@ public class PostController {
     }
 
     @PostMapping(value = "/posts/{id}/edit")
-    public String update(@ModelAttribute Post post){
+    public String update(@PathVariable long id,@ModelAttribute Post post){
 //        Post post = postDao.getOne(id);
 //        post.setTitle(title);
 //        post.setBody(body);
