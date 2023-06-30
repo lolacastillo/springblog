@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/partials/header :: head">
-    <meta charset="UTF-8">
-    <title>Dice</title>
+  <meta charset="UTF-8">
+  <title>Dice</title>
 </head>
 <body>
 <nav th:replace="/partials/navbar::navbar"/>
@@ -16,10 +16,14 @@
 <a href="/roll-dice/6">Six</a>
 
 <h1>Your choice: <span th:text="${dice}">number</span></h1>
-<h1>The dice landed on: <span th:text="${result}">number</span></h1>
+<h2>The dice landed on: <span th:text="${result}">number</span></h2>
 <h1><span th:text="${match}"></span></h1>
 
-<footer th:replace="/partials/footer :: foot"/>
+
+<h1>
+  Your roll matched <span th:text="${match}"/> times
+</h1>
+
 
 </body>
 </html>
